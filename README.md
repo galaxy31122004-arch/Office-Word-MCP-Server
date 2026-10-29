@@ -278,11 +278,29 @@ find_text_in_document(filename, text_to_find, match_case=True, whole_word=False)
 ```python
 format_text(filename, paragraph_index, start_pos, end_pos, bold=None,
             italic=None, underline=None, color=None, font_size=None, font_name=None)
+format_math_expression(filename, paragraph_index, notation, occurrence=1)
+format_math_expression_in_table_cell(filename, table_index, row_index,
+                                     col_index, notation, paragraph_index=0,
+                                     occurrence=1)
 search_and_replace(filename, find_text, replace_text)
 delete_paragraph(filename, paragraph_index)
 create_custom_style(filename, style_name, bold=None, italic=None,
                     font_size=None, font_name=None, color=None, base_style=None)
 ```
+
+For editable inline notation, use `format_math_expression` with `f_{CK}` or
+`T_{bit}` for subscripts and `x^{2}` for superscripts. The tool finds the
+corresponding plain text (`f_CK`, `T_bit`, or `x^2`) in the selected paragraph,
+removes the typing marker, and applies Word's native script formatting while
+preserving the surrounding text style. Use `occurrence` when the same notation
+appears more than once in a paragraph.
+Use `format_math_expression_in_table_cell` for notation inside a table cell.
+
+For local development, install this checkout in editable mode with
+`python -m pip install -e .` inside the MCP virtual environment, and point the
+MCP client at that environment's `word_mcp_server` executable. Source edits in
+this repository then take effect when the MCP server process restarts. Push
+commits to the configured Git remote to share those edits with other machines.
 
 ### Table Formatting
 
